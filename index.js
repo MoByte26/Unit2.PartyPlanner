@@ -1,22 +1,23 @@
 const COHORT = "2308-ACC-ET-WEB-PT-A";
 const BASE_URL = "https://fsa-crud-2aa9294fe819.herokuapp.com/api/" + COHORT;
 
-
+/***** STATE *****/
 const state = {
   events: [],
 };
 
-
+/***** REFERENCES *****/
 const form = document.querySelector("form");
 const eventList = document.getElementById("eventList");
 
-
+/***** EVENT LISTENERS *****/
 form.addEventListener("submit", async (event) => {
   event.preventDefault();
   try {
-   
+    // Format event date to ISO Date string
+
     const eventDate = new Date(form.eventDate.value).toISOString();
-  
+    // Post to endpoint with current form values to create and add an event
     await createEvent(
       form.eventName.value,
       form.eventDescription.value,
@@ -24,7 +25,7 @@ form.addEventListener("submit", async (event) => {
       form.eventLocation.value
     );
 
-    
+    // Clear input fields to reset form
     form.eventName.value = "";
     form.eventDescription.value = "";
     form.eventDate.value = "";
@@ -47,7 +48,7 @@ async function render() {
 function renderEvents() {
   const eventElements = state.events.map((event) => {
     // Format Date ISO string to readable
-    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toLocaleString
+
     const eventDate = new Date(event.date).toLocaleString();
     // Each party in the list has a delete button which removes the party when clicked
     const eventCard = document.createElement("section");
@@ -65,7 +66,9 @@ function renderEvents() {
     deleteButton.innerText = "Delete Event";
     // Append button to event card section
     eventCard.append(deleteButton);
-    
+    // Attach event listener to button so the correct event is deleted
+    // How does this button have reference to the correct event id?
+
     deleteButton.addEventListener("click", () => deleteEvent(event.id));
 
     return eventCard;
@@ -108,7 +111,6 @@ async function createEvent(name, description, date, location) {
     });
     const json = await response.json();
 
-    // Notice the error property on the response schema in the API documentation: https://fsa-crud-2aa9294fe819.herokuapp.com/api/
     if (json.error) {
       throw new Error(json.message);
     }
@@ -121,14 +123,15 @@ async function createEvent(name, description, date, location) {
   }
 }
 
-
+// Fetch is used correctly to DELETE a party from the API.
+// The event listener is attached to a rendered button so the correct event is deleted
 async function deleteEvent(id) {
   try {
     const response = await fetch(`${BASE_URL}/events/${id}`, {
       method: "DELETE",
     });
 
-    
+    // Handling errors differently here since a successful deletion only sends back a status code
     if (!response.ok) {
       throw new Error("Event could not be deleted.");
     }

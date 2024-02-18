@@ -1,0 +1,70 @@
+* {
+  font-family: fantasy;
+  font-size: x-large;  
+  background-color: honeydew;
+}
+
+body {
+  margin: 20px 40px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 3px;
+  margin-bottom: 15px;
+}
+
+form input {
+  margin-bottom: 7px;
+}
+
+form input,
+form label {
+  width: 60%;
+  border-color: blue;
+  border-width: .3em;
+}
+
+article {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-evenly;
+  gap: 10px;
+}
+
+section {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border: 1px solid blue;
+  border-radius: 10px;
+  width: 300px;
+  padding: 0 15px 15px;
+  margin: 0 10px 10px 0;
+  border-width: .5em;
+}
+
+h1{
+  color: blueviolet;
+  font-stretch: wider;
+  font-style: italic;
+}
+
+h2{
+  color: blueviolet;
+  font-stretch: wider;
+}
+
+h3{
+  color: blueviolet;
+  font-stretch: wider;
+}
+
+div {
+  color: blueviolet;
+  font-weight: bold;
+}
+
